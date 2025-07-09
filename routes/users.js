@@ -1,10 +1,13 @@
 const express = require("express");
 const router = express.Router();
-const { listUsers, createUser, updateUser, deleteUser } = require("../controllers/usersController");
+const usersController = require("../controllers/usersController");
 
-router.get("/", listUsers);
-router.post("/", createUser);
-router.put("/:id", updateUser);
-router.delete("/:id", deleteUser);
+const validate = require("../middlewares/validate");
+const userSchema = require("../schemas/userSchema");
+
+router.get("/", usersController.listUsers);
+router.post("/", validate(userSchema), usersController.createUser);
+router.put("/:id", validate(userSchema), usersController.updateUser);
+router.delete("/:id", usersController.deleteUser);
 
 module.exports = router;
