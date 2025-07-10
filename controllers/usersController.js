@@ -10,18 +10,6 @@ async function listUsers(req, res) {
     res.json(users);
 }
 
-async function createUser(req, res) {
-    const { name } = req.body;
-
-    if (!name) {
-        return res.status(400).json({error: "Name is required"})
-    };
-    
-    const user = await User.create({ name })
-
-    res.status(201).json(user);
-};
-
 async function updateUser(req, res) {
     const { id } = req.params;
     const { name } = req.body;
@@ -54,7 +42,6 @@ async function deleteUser(req, res) {
 module.exports = {
     getProfile,
     listUsers,
-    createUser,
     updateUser,
     deleteUser
 }
