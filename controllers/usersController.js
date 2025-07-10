@@ -1,10 +1,9 @@
 const User = require("../models/User");
+const authMiddleware = require("../middlewares/authMiddleware");
 
-let users = [
-    {id: 1, name: "Luis Gabriel"},
-    {id: 2, name: "Carlos Alberto"},
-    {id: 3, name: "Matheus Fernandes"}
-];
+function getProfile(req, res) {
+    res.json({ message: `Welcome, user ${req.user.id}`});
+}
 
 async function listUsers(req, res) {
     const users = await User.find();
@@ -17,7 +16,7 @@ async function createUser(req, res) {
     if (!name) {
         return res.status(400).json({error: "Name is required"})
     };
-
+    
     const user = await User.create({ name })
 
     res.status(201).json(user);
@@ -53,6 +52,7 @@ async function deleteUser(req, res) {
 };
 
 module.exports = {
+    getProfile,
     listUsers,
     createUser,
     updateUser,
